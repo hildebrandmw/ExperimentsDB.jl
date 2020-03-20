@@ -189,5 +189,9 @@ end
     @test !in(ExperimentsDB.todict((a = 1, c = 2)), db)
     @test issubset(ExperimentsDB.todict((a = 1, c = 2)), db)
     @test !issubset(ExperimentsDB.todict((a = 1, d = 2)), db)
+
+    # Findonly
+    @test isa(ExperimentsDB.findonly(db, (a = 1, b = nothing, c = 2)), ExperimentsDB.Entry)
+    @test isnothing(ExperimentsDB.findonly(db, (a = 1, b = nothing)))
 end
 

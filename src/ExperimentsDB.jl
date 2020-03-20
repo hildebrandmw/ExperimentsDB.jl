@@ -126,6 +126,13 @@ Base.getindex(x::Database, i::NamedTuple) = x[todict(i)]
 Base.getindex(x::Database; kw...) = x[(;kw...,)]
 Base.getindex(x::Database, s::Symbol) = [ e[s] for e in x ]
 
+function findonly(x::Database, i)
+    inds = findall(x -> in(todict(i), x), x.entries)
+    isempty(inds) && return nothing
+    length(inds) > 1 && error("Found $inds matching entries!!")
+    return x[first(inds)]
+end
+
 #####
 ##### Tables Interface
 #####
